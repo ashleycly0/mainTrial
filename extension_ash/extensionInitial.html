@@ -1,0 +1,189 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METS Game Level 2 - Extension</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+      body {
+        color: #fffbeb;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .main-container {
+        text-align: center;
+        max-width: 1000px;
+        padding: 40px;
+        background: rgba(255, 251, 235, 0.02);
+        border: 1px solid rgba(245, 158, 11, 0.15);
+        border-radius: 40px;
+      }
+
+      h1 {
+        font-size: 4.5rem;
+        color: #f59e0b;
+        margin: 0;
+        letter-spacing: 8px;
+        text-shadow: 0 0 20px rgba(245, 158, 11, 0.3);
+      }
+
+      .subtitle {
+        font-size: 1.2rem;
+        letter-spacing: 2px;
+        text-transform: uppercase;
+        margin-bottom: 50px;
+        color: rgba(255, 251, 235, 0.6);
+      }
+
+      .mets-definition-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: 20px;
+        margin-bottom: 60px;
+      }
+
+      .concept-card {
+        padding: 25px 15px;
+        border: 1px solid #92400e;
+        border-radius: 20px;
+        background: rgba(146, 64, 14, 0.05);
+        transition:
+          transform 0.3s ease,
+          background 0.3s ease;
+      }
+
+      .concept-card:hover {
+        transform: translateY(-10px);
+        background: rgba(146, 64, 14, 0.15);
+      }
+
+      .letter {
+        font-size: 2.5rem;
+        font-weight: bold;
+        color: #f59e0b;
+        display: block;
+      }
+      .term {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin: 10px 0;
+        display: block;
+      }
+      .desc {
+        font-size: 0.75rem;
+        opacity: 0.6;
+        line-height: 1.4;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: 20px;
+      }
+
+      /* Using your project's existing button style classes */
+      .btn-start {
+        background-color: #92400e;
+        color: white;
+        padding: 20px 60px;
+        font-size: 1.4rem;
+        border: none;
+        border-radius: 50px;
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .btn-start:hover {
+        background-color: #f59e0b;
+        box-shadow: 0 0 30px rgba(245, 158, 11, 0.4);
+      }
+
+      /* Screen warning from your friend's code */
+      .screen-warning {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0a120f;
+        z-index: 9999;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      @media screen and (max-width: 1024px) {
+        .screen-warning {
+          display: flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      window.addEventListener("load", () => {
+        localStorage.removeItem("mets_extension_divergence");
+        localStorage.removeItem("mets_extension_correlative");
+        localStorage.removeItem("mets_extension_implication");
+        localStorage.removeItem("mets_extension_openingup");
+      });
+    </script>
+
+    <div class="main-container">
+      <p style="color: #f59e0b; font-weight: bold; margin-bottom: 10px">
+        WELCOME TO
+      </p>
+      <h1>LEVEL 2 - EXTENSION</h1>
+      <div class="subtitle">
+        In this stage, you will expand your original model by systematically
+        generating new ideas through:
+      </div>
+
+      <div class="mets-definition-grid">
+        <div class="concept-card">
+          <span class="letter">D</span>
+          <span class="term">Divergence</span>
+          <p class="desc">One object → Multiple characteristics/values.</p>
+        </div>
+        <div class="concept-card">
+          <span class="letter">C</span>
+          <span class="term">Correlative</span>
+          <p class="desc">
+            Connect ideas across objects, functions, or environments.
+          </p>
+        </div>
+        <div class="concept-card">
+          <span class="letter">I</span>
+          <span class="term">Implication</span>
+          <p class="desc">If A exists → B must exist.</p>
+        </div>
+        <div class="concept-card">
+          <span class="letter">O</span>
+          <span class="term">Opening-Up</span>
+          <p class="desc">Break apart → Recombine into new forms.</p>
+        </div>
+      </div>
+
+      <div class="btn-container">
+        <a href="divergence.html" class="btn-start">Start Extending ➔</a>
+      </div>
+    </div>
+
+    <div class="screen-warning">
+      <h1 style="font-size: 2rem">Screen size not supported</h1>
+      <p>Please use a desktop or tablet in landscape mode (width > 1024px).</p>
+    </div>
+  </body>
+</html>

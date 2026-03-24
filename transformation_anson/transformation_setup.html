@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>METS Game - Transformation Setup</title>
+    <link rel="stylesheet" href="../style.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <h1>Stage 3 — Transformation Setup</h1>
+
+      <section class="card">
+        <h2>Source Concept</h2>
+        <p><b>Name:</b> <span id="conceptName"></span></p>
+        <p><b>User:</b> <span id="conceptUser"></span></p>
+        <p><b>Problem:</b> <span id="conceptProblem"></span></p>
+        <p><b>Pitch:</b> <span id="conceptPitch"></span></p>
+      </section>
+
+      <section class="card">
+        <h2>Feature Selection</h2>
+        <div id="featureList"></div>
+      </section>
+
+      <section class="card">
+        <h2>Mode</h2>
+        <select id="modeSelect">
+          <option value="practical">Practical</option>
+          <option value="balanced" selected>Balanced</option>
+          <option value="creative">Creative</option>
+        </select>
+      </section>
+
+      <div class="actions">
+        <button id="saveSetupBtn">Save Setup</button>
+        <button id="nextBtn">Next</button>
+      </div>
+    </main>
+
+    <script src="transformation_data.js"></script>
+    <script src="transformation_setup.js"></script>
+  </body>
+</html>

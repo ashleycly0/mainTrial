@@ -1,0 +1,501 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>METS Game - Level 1.3: Relation</title>
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+        }
+      }
+    </script>
+    <style>
+      body {
+        margin: 0;
+        background: #050a08;
+        color: #fffbeb;
+        font-family: "Courier New", monospace;
+      }
+      .split-screen {
+        display: flex;
+        height: 100vh;
+        overflow: hidden;
+      }
+      /* 左側：輸入區域 */
+      .input-panel {
+        width: 45%;
+        padding: 40px;
+        overflow-y: auto;
+        border-right: 1px solid rgba(245, 158, 11, 0.3);
+      }
+      .section-box {
+        background: rgba(255, 251, 235, 0.05);
+        border-radius: 20px;
+        padding: 25px;
+        margin-top: 20px;
+        border: 1px solid rgba(245, 158, 11, 0.1);
+      }
+      .input-row {
+        display: flex;
+        gap: 10px;
+        margin-bottom: 15px;
+      }
+      .input-row input {
+        background: rgba(255, 255, 255, 0.05);
+        border: 1px solid rgba(245, 158, 11, 0.5);
+        color: #fef3c7;
+        padding: 12px;
+        border-radius: 8px;
+        flex: 1;
+        width: 0;
+        font-size: 0.85rem;
+      }
+      input[readonly] {
+        background: rgba(245, 158, 11, 0.1);
+        color: rgba(254, 243, 199, 0.5);
+        cursor: not-allowed;
+      }
+      .btn-add {
+        background: none;
+        border: 1px dashed #f59e0b;
+        color: #f59e0b;
+        cursor: pointer;
+        border-radius: 8px;
+        padding: 10px;
+        width: 100%;
+        margin-top: 10px;
+        transition: 0.3s;
+      }
+      .btn-add:hover {
+        background: rgba(245, 158, 11, 0.1);
+      }
+      .btn-next {
+        background: #92400e;
+        color: white;
+        padding: 18px;
+        border-radius: 12px;
+        cursor: pointer;
+        border: none;
+        width: 100%;
+        margin-top: 30px;
+        font-size: 1.1rem;
+        transition: 0.3s;
+        font-weight: bold;
+      }
+      .btn-next:hover {
+        background: #f59e0b;
+        transform: translateY(-2px);
+        box-shadow: 0 5px 15px rgba(245, 158, 11, 0.3);
+      }
+      /* 右側：3D 預覽 */
+      .preview-panel {
+        width: 55%;
+        background: radial-gradient(circle at center, #0a1a15 0%, #050a08 100%);
+        position: relative;
+      }
+      #three-container {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .label-3d {
+        position: absolute;
+        top: 20px;
+        left: 20px;
+        color: rgba(245, 158, 11, 0.5);
+        font-size: 0.7rem;
+        letter-spacing: 2px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="split-screen">
+      <div class="input-panel">
+        <h1 style="color: #f59e0b; margin-bottom: 5px">
+          Level 1.3: Relation-Element
+        </h1>
+        <p style="opacity: 0.8">
+          How does the
+          <span id="display-obj" style="color: #f59e0b; font-weight: bold"
+            >Smart Cup</span
+          >
+          connect with the world?
+        </p>
+
+        <div class="section-box">
+          <div id="r-list">
+            <label
+              style="
+                color: #f59e0b;
+                display: block;
+                margin-bottom: 15px;
+                font-size: 0.9rem;
+              "
+              >Relation Type | Target Entity | Value</label
+            >
+            <div class="input-row">
+              <input type="text" class="r-type" value="Feedback" readonly />
+              <input type="text" class="r-obj" value="User" readonly />
+              <input
+                type="text"
+                class="r-val"
+                placeholder="e.g. Light Signal"
+                oninput="updateRelation3D()"
+              />
+            </div>
+          </div>
+          <button class="btn-add" onclick="addRelationRow()">
+            + Add Interaction Relation
+          </button>
+        </div>
+
+        <button
+          class="btn-next"
+          onclick="saveAndGo('../extension_ash/extensionInitial.html')"
+        >
+          FINISH & GENERATE CONCEPT ➔
+        </button>
+      </div>
+
+      <div class="preview-panel">
+        <div class="label-3d">SYSTEM CONNECTIVITY VISUALIZER</div>
+        <div id="three-container"></div>
+      </div>
+    </div>
+
+    <script src="model.js"></script>
+
+    <script type="module">
+      import * as THREE from "three";
+      import { OrbitControls } from "three/addons/controls/OrbitControls.js";
+
+      let scene, camera, renderer, cup, phone, controls, clock;
+
+      // Relation 狀態 (你原本的)
+      let activeRelations = { app: false, user: false, social: false };
+      // Affair 繼承狀態 (新增的)
+      let activeAffairs = {
+        tracking: false,
+        heating: false,
+        sensing: false,
+        washing: false,
+      };
+      // 特效物件
+      let effects = { signal: null, sensorLED: null };
+
+      // 儲存上一頁的基礎外觀
+      let originalSettings = {
+        color: 0xeeeeee,
+        metalness: 0.3, // 你這版預設是 0.3
+        roughness: 0.4,
+      };
+
+      function init() {
+        const container = document.getElementById("three-container");
+        clock = new THREE.Clock();
+        scene = new THREE.Scene();
+
+        // 確保視窗長寬比正確
+        const width = container.clientWidth;
+        const height = container.clientHeight;
+        camera = new THREE.PerspectiveCamera(50, width / height, 0.1, 1000);
+        camera.position.set(3, 2, 5);
+
+        renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+        renderer.setSize(width, height);
+        renderer.setPixelRatio(window.devicePixelRatio);
+        container.appendChild(renderer.domElement);
+
+        // 光照 (完全保留你的設定)
+        scene.add(new THREE.AmbientLight(0xffffff, 0.8));
+        const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+        dirLight.position.set(5, 10, 5);
+        scene.add(dirLight);
+
+        // ==========================================
+        // 1. 讀取 Matter 繼承參數 (要在建立材質前讀取)
+        // ==========================================
+        const saved = JSON.parse(localStorage.getItem("temp_model"));
+        if (saved && saved.matter) {
+          saved.matter.forEach((item) => {
+            const char = (item.char || "").toLowerCase();
+            const val = (item.val || "").toLowerCase().trim();
+
+            if (char.includes("color") || char.includes("顏色")) {
+              const colorMap = {
+                red: 0xff4444,
+                blue: 0x4444ff,
+                green: 0x44ff44,
+                gold: 0xffd700,
+                black: 0x111111,
+                white: 0xffffff,
+                藍色: 0x4444ff,
+                紅色: 0xff4444,
+              };
+              originalSettings.color = colorMap[val] || val;
+            }
+            if (char.includes("material") || char.includes("材質")) {
+              if (
+                val.includes("metal") ||
+                val.includes("steel") ||
+                val.includes("金屬")
+              ) {
+                originalSettings.metalness = 0.8;
+                originalSettings.roughness = 0.2;
+              }
+            }
+          });
+        }
+
+        // ==========================================
+        // 2. 建立你的原始場景模型 (位置完好無缺)
+        // ==========================================
+
+        // a. 杯子模型 (位置 -1，套用繼承參數)
+        const cupGeo = new THREE.CylinderGeometry(0.6, 0.5, 1.4, 32);
+        const cupMat = new THREE.MeshStandardMaterial({
+          color: originalSettings.color,
+          metalness: originalSettings.metalness,
+          roughness: originalSettings.roughness,
+          transparent: true, // 方案 A 需要透明度
+          opacity: 1.0,
+        });
+        cup = new THREE.Mesh(cupGeo, cupMat);
+        cup.position.x = -1;
+        scene.add(cup);
+
+        // b. 手機模型 (完全保留你精心設計的群組與位置)
+        const phoneGroup = new THREE.Group();
+        const phoneBodyGeo = new THREE.BoxGeometry(0.9, 1.7, 0.1);
+        const phoneBodyMat = new THREE.MeshStandardMaterial({
+          color: 0x222222,
+          roughness: 0.2,
+        });
+        const phoneBody = new THREE.Mesh(phoneBodyGeo, phoneBodyMat);
+        phoneGroup.add(phoneBody);
+
+        const screenGeo = new THREE.PlaneGeometry(0.8, 1.6);
+        const screenMat = new THREE.MeshBasicMaterial({
+          color: 0x44aaff,
+          transparent: true,
+          opacity: 0,
+        });
+        const screen = new THREE.Mesh(screenGeo, screenMat);
+        screen.position.z = 0.051;
+        phoneGroup.add(screen);
+        phoneGroup.screen = screen; // 將螢幕綁定在 group 上方便呼叫
+
+        phoneGroup.position.set(1.2, 0, 0); // 放在右邊
+        phoneGroup.rotation.y = -0.4;
+        scene.add(phoneGroup);
+        phone = phoneGroup;
+
+        // ==========================================
+        // 3. 補回 Affair 的特效物件與狀態繼承
+        // ==========================================
+
+        // a. 特效物件
+        const ringGeo = new THREE.RingGeometry(0.7, 0.75, 32);
+        const ringMat = new THREE.MeshBasicMaterial({
+          color: 0x44aaff,
+          side: THREE.DoubleSide,
+          transparent: true,
+        });
+        effects.signal = new THREE.Mesh(ringGeo, ringMat);
+        effects.signal.rotation.x = Math.PI / 2;
+        effects.signal.visible = false;
+        scene.add(effects.signal);
+
+        const sensorGeo = new THREE.SphereGeometry(0.06, 16, 16);
+        const sensorMat = new THREE.MeshBasicMaterial({
+          color: 0x00ff00,
+          transparent: true,
+        });
+        effects.sensorLED = new THREE.Mesh(sensorGeo, sensorMat);
+        effects.sensorLED.position.set(0.55, 0.3, 0);
+        effects.sensorLED.visible = false;
+        cup.add(effects.sensorLED); // 貼在杯子上
+
+        // b. 讀取 Affair 狀態
+        if (saved && saved.affair) {
+          saved.affair.forEach((item) => {
+            const a = (item.act || "").toLowerCase();
+            const v = (item.val || "").trim();
+            // 只要 affair 裡有設定值，就啟動對應動畫
+            if (v !== "") {
+              if (a.includes("heat")) activeAffairs.heating = true;
+              if (a.includes("sens")) activeAffairs.sensing = true;
+              if (a.includes("track")) activeAffairs.tracking = true;
+              if (a.includes("wash") || a.includes("洗"))
+                activeAffairs.washing = true;
+            }
+          });
+        }
+
+        controls = new OrbitControls(camera, renderer.domElement);
+        controls.enableDamping = true;
+
+        // 綁定全域監聽器，確保不論先點哪邊都能觸發
+        document.addEventListener("input", (e) => {
+          if (
+            e.target.classList.contains("r-obj") ||
+            e.target.classList.contains("r-val") ||
+            e.target.classList.contains("r-type")
+          ) {
+            updateRelation3D();
+          }
+        });
+
+        // 啟動動畫
+        updateRelation3D(); // 確保剛載入時也抓取一次畫面上的預設值
+        animate();
+      }
+
+      function animate() {
+        requestAnimationFrame(animate);
+        const t = clock.getElapsedTime();
+
+        // 1. 基礎動作 (完全保留你的懸浮感)
+        phone.position.y = Math.sin(t * 0.8) * 0.05; // 手機懸浮
+
+        // ==========================================
+        // 2. Relation 專屬動畫 (方案 A 數據同步 與 原本的 Social 發光代碼)
+        // ==========================================
+        if (activeRelations.social) {
+          // Social 關係：保持旋轉 + 粉紅橘色發光 (保留你的設定)
+          cup.rotation.y += 0.05;
+          phone.screen.material.color.setHex(0xff6b6b);
+          phone.screen.material.opacity = 0.5 + Math.sin(t * 8) * 0.3;
+          cup.material.emissive.setHex(0xff6b6b);
+          cup.material.emissiveIntensity = 0.3;
+        } else if (activeRelations.app) {
+          // 【方案 A 修改】App/Water Intake 關係：數據同步 (藍色脈衝)
+
+          // 基礎動作停止
+          cup.rotation.y += 0.005;
+
+          // a. 手機連動：手機亮深藍光，呼吸頻率像數據在流動
+          phone.screen.material.color.setHex(0x0077ff);
+          phone.screen.material.opacity = 0.3 + Math.sin(t * 4) * 0.2; // 頻率 4，像數據脈衝
+
+          // b. 杯子動作：使用 EmissiveIntensity 製造「垂直數據流動掃描感」
+          cup.material.emissive.setHex(0x0077ff); // 深藍色
+
+          // 使用餘數，製造從無到有、從下到上的掃描循環
+          let pulse = (t % 2) / 2; // 0.0 -> 1.0 的循環
+          cup.material.emissiveIntensity = 0.1 + Math.pow(pulse, 0.5) * 0.6; // 快速充滿，然後循環
+
+          // 如果你希望杯子有一點跳動感可以加這一行
+          // cup.position.y = Math.abs(Math.sin(t * 4)) * 0.02;
+        } else {
+          // 平時：平滑歸位
+          cup.rotation.y += 0.005; // 基礎自轉
+          phone.screen.material.opacity = THREE.MathUtils.lerp(
+            phone.screen.material.opacity,
+            0,
+            0.1,
+          );
+          cup.material.emissiveIntensity = THREE.MathUtils.lerp(
+            cup.material.emissiveIntensity,
+            0,
+            0.1,
+          );
+          cup.position.y = THREE.MathUtils.lerp(cup.position.y, 0, 0.1); // Y 軸歸位
+        }
+
+        // ==========================================
+        // 3. 繼承 Affair 的位移動畫 (加在杯子基礎位置 x = -1 上)
+        // ==========================================
+        let cupBaseX = -1;
+        if (activeAffairs.washing) {
+          cup.position.x = cupBaseX + Math.sin(t * 20) * 0.03;
+        } else if (activeAffairs.heating) {
+          cup.position.x = cupBaseX + Math.sin(t * 40) * 0.015;
+        } else {
+          cup.position.x = THREE.MathUtils.lerp(cup.position.x, cupBaseX, 0.1);
+        }
+
+        // ==========================================
+        // 4. 顏色混合過渡 (繼承 originalSettings)
+        // ==========================================
+        if (activeRelations.user) {
+          cup.material.color.lerp(new THREE.Color(0xf59e0b), 0.05); // user 關係變金黃色 (保留你的設定)
+        } else if (activeAffairs.heating) {
+          cup.material.color.lerp(new THREE.Color(0xffaa44), 0.05); // 加熱變橘色
+        } else {
+          // 平時回到使用者在第一頁選擇的顏色
+          cup.material.color.lerp(
+            new THREE.Color(originalSettings.color),
+            0.05,
+          );
+        }
+
+        // ==========================================
+        // 5. 繼承 Affair 特效物件
+        // ==========================================
+        // Tracking 訊號波
+        if (activeAffairs.tracking) {
+          effects.signal.visible = true;
+          effects.signal.scale.setScalar(1 + (t % 1.2) * 1.5);
+          effects.signal.material.opacity = 1 - (t % 1.2);
+          effects.signal.position.copy(cup.position);
+          effects.signal.position.y = cup.position.y + 0.8;
+        } else {
+          effects.signal.visible = false;
+        }
+
+        // Sensing 呼吸燈
+        if (activeAffairs.sensing) {
+          effects.sensorLED.visible = true;
+          effects.sensorLED.material.opacity = 0.4 + Math.sin(t * 5) * 0.4;
+          effects.sensorLED.material.color.setHSL((t % 2) / 2, 0.8, 0.5);
+        } else {
+          effects.sensorLED.visible = false;
+        }
+
+        controls.update();
+        renderer.render(scene, camera);
+      }
+
+      // 更新 Relation 數據狀態 (完全保留你的 placeholder 支援邏輯)
+      window.updateRelation3D = function () {
+        const objs = document.querySelectorAll(".r-obj");
+        const vals = document.querySelectorAll(".r-val");
+
+        activeRelations.app = false;
+        activeRelations.user = false;
+        activeRelations.social = false;
+
+        for (let i = 0; i < objs.length; i++) {
+          // 這裡保留你原本精妙的設計：如果沒填就抓 placeholder
+          const o = (objs[i].value || objs[i].placeholder).toLowerCase();
+          const v = vals[i].value.trim();
+          if (v !== "") {
+            if (o.includes("app") || o.includes("phone") || o.includes("water"))
+              activeRelations.app = true;
+            if (o.includes("user") || o.includes("person"))
+              activeRelations.user = true;
+            if (
+              o.includes("friend") ||
+              o.includes("social") ||
+              o.includes("cheer")
+            )
+              activeRelations.social = true;
+          }
+        }
+      };
+
+      init();
+
+      window.addEventListener("resize", () => {
+        const container = document.getElementById("three-container");
+        if (!container) return;
+        camera.aspect = container.clientWidth / container.clientHeight;
+        camera.updateProjectionMatrix();
+        renderer.setSize(container.clientWidth, container.clientHeight);
+      });
+    </script>
+  </body>
+</html>

@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>METS Game Result</title>
+
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    .result-page{
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      padding: 4vh 4vw;
+      gap: 2vh;
+      box-sizing: border-box;
+    }
+
+    .result-header{
+      text-align: center;
+    }
+
+    .result-title{
+      margin: 0;
+      font-size: clamp(32px, 3vw, 60px);
+    }
+
+    .result-subtitle{
+      margin: 0.5rem 0 0;
+      opacity: 0.85;
+      font-size: clamp(16px, 1.4vw, 24px);
+    }
+
+    .result-card{
+      flex: 1;
+      border: 1px solid rgba(255, 251, 235, 0.16);
+      border-radius: 22px;
+      background: rgba(0,0,0,0.12);
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+      min-height: 0;
+    }
+
+    .card-head{
+      padding: 16px 18px;
+      border-bottom: 1px solid rgba(255,251,235,0.10);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .card-head h2{
+      margin: 0;
+      font-size: 18px;
+      font-weight: 700;
+    }
+
+    .status-box{
+      margin: 10px;
+      padding: 12px;
+      border-radius: 16px;
+      border: 1px solid rgba(245,158,11,0.25);
+      background: rgba(245,158,11,0.08);
+      font-size: 14px;
+    }
+
+    .report-preview{
+      flex: 1;
+      min-height: 0;
+      overflow: auto;
+      padding: 16px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      font-size: 14px;
+      margin: 0;
+    }
+
+    .result-footer{
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 10px;
+      flex-wrap: wrap;
+    }
+
+    .ghost-btn{
+      height: 40px;
+      padding: 0 14px;
+      border-radius: 14px;
+      background: transparent;
+      border: 1px solid rgba(255,251,235,0.16);
+      color: #FFFBEB;
+      cursor: pointer;
+    }
+
+    .ghost-btn:hover{
+      border-color: rgba(245,158,11,0.55);
+    }
+  </style>
+</head>
+
+<body>
+  <main class="result-page">
+    <header class="result-header">
+      <h1 class="result-title">RESULT</h1>
+      <p class="result-subtitle">Final METS Design Report</p>
+    </header>
+
+    <section class="result-card">
+      <div class="card-head">
+        <h2>Report Preview</h2>
+        <button id="copy-report" class="ghost-btn" type="button">Copy</button>
+      </div>
+
+      <div id="statusBox" class="status-box">
+        Loading report...
+      </div>
+
+      <pre id="reportPreview" class="report-preview"></pre>
+    </section>
+
+    <footer class="result-footer">
+      <button id="download-pdf" class="btn" type="button">Download PDF</button>
+      <a href="startPage.html"><button class="btn-1" type="button">Home</button></a>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="result.js"></script>
+  </main>
+</body>
+</html>

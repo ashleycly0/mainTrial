@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>METS Game - Transformation Generate</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <main class="page-shell">
+      <h1>Stage 3 — Generated Schemes</h1>
+
+      <section class="card">
+        <h2>Source Concept</h2>
+        <p><b>Name:</b> <span id="sourceName"></span></p>
+        <p><b>Pitch:</b> <span id="sourcePitch"></span></p>
+        <p><b>Mode:</b> <span id="sourceMode"></span></p>
+      </section>
+
+      <section class="card">
+        <h2>Generated Ideas</h2>
+        <div id="schemeList"></div>
+      </section>
+
+      <div class="actions">
+        <button id="backBtn">Back</button>
+      </div>
+    </main>
+
+    <script src="transformation_data.js"></script>
+    <script src="transformation_rules.js"></script>
+    <script src="transformation_generate.js"></script>
+  </body>
+</html>

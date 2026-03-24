@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METS Game - Level 2.4: Opening-up</title>
+
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="openingUp.css" />
+  </head>
+  <body>
+    <div class="selection-button">
+      <a href="implication.html"
+        ><button type="button" class="btn-1">Back</button></a
+      >
+      <button
+        type="button"
+        class="btn is-disabled"
+        id="nextBtn"
+        aria-disabled="true"
+      >
+        Finish & Analyse
+      </button>
+    </div>
+
+    <main class="openingup-page">
+      <header class="ou-header">
+        <div class="ou-title">
+          <h1>Level 2.4 — Opening-up</h1>
+          <p class="subtitle">
+            Use previous stage results to form a complete new product concept.
+          </p>
+        </div>
+
+        <div class="ou-progress">
+          <div class="progress-row">
+            <span id="completeText">Completion: 0/3</span>
+            <span id="ruleText">Need: 3/3</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="ou-grid">
+        <!-- LHS -->
+        <aside class="imp-card">
+          <div class="card-head">
+            <h2>Correlative Features Source</h2>
+            <button class="ghost-btn" id="refreshBtn" type="button">
+              Refresh
+            </button>
+          </div>
+          <p class="small-tip">
+            These are retrieved automatically from your Correlative stage links.
+          </p>
+          <div class="imp-list" id="featureSourceList"></div>
+        </aside>
+
+        <!-- Middle -->
+        <section class="builder-card">
+          <div class="card-head">
+            <h2>Concept Builder</h2>
+            <div class="head-actions">
+              <button class="ghost-btn" id="clearBtn" type="button">
+                Clear Typed Fields
+              </button>
+            </div>
+          </div>
+
+          <label class="field-label" for="nameInput"
+            >Product name (from Model stage)</label
+          >
+          <input id="nameInput" class="input readonly-field" readonly />
+
+          <label class="field-label" for="userInput">Target user *</label>
+          <input
+            id="userInput"
+            class="input"
+            placeholder="e.g., Students who need better hydration support"
+          />
+
+          <label class="field-label" for="problemInput"
+            >Problem statement *</label
+          >
+          <textarea
+            id="problemInput"
+            class="textarea"
+            rows="3"
+            placeholder="What problem does this product solve?"
+          ></textarea>
+
+          <label class="field-label" for="featureInput"
+            >Key features (from Correlative stage)</label
+          >
+          <textarea
+            id="featureInput"
+            class="textarea readonly-field"
+            rows="7"
+            readonly
+          ></textarea>
+
+          <label class="field-label" for="pitchInput"
+            >One-sentence pitch *</label
+          >
+          <textarea
+            id="pitchInput"
+            class="textarea"
+            rows="2"
+            placeholder="Write one sentence to introduce and sell the idea."
+          ></textarea>
+
+          <div class="builder-row">
+            <button class="mini-btn" id="saveBtn" type="button">Save</button>
+            <div class="save-hint" id="saveHint">Not saved yet</div>
+          </div>
+
+          <div class="rule-box">
+            <h3>Rules to pass</h3>
+            <ul>
+              <li><b>Product name</b> is imported from Model stage</li>
+              <li><b>Key features</b> are imported from Correlative stage</li>
+              <li>
+                Fill: <b>Target user</b>, <b>Problem statement</b>,
+                <b>One-sentence pitch</b>
+              </li>
+              <li>Click <b>Finish & Analyse</b> to save and continue</li>
+            </ul>
+          </div>
+
+          <div class="status-box" id="statusBox" aria-live="polite">
+            Complete the concept using imported data and your own written idea.
+          </div>
+        </section>
+
+        <!-- RHS -->
+        <aside class="preview-card">
+          <div class="card-head">
+            <h2>Preview</h2>
+            <button class="ghost-btn" id="copyBtn" type="button">Copy</button>
+          </div>
+
+          <pre class="preview" id="previewBox">Preview will appear here.</pre>
+        </aside>
+      </section>
+    </main>
+
+    <div class="modal-backdrop" id="saveModal" hidden aria-hidden="true">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="modalTitle"
+      >
+        <div class="modal-header">
+          <div class="modal-title" id="modalTitle">Saved ✅</div>
+          <button
+            class="modal-close"
+            id="modalClose"
+            type="button"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="modal-body" id="modalBody">
+          Moving to Transformation level…
+        </div>
+
+        <div class="modal-footer">
+          <button class="modal-ok" id="modalOk" type="button">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen-warning">
+      <h1>Screen size not supported</h1>
+      <p>
+        Please use a desktop or tablet in landscape mode (width &gt; 1024px).
+      </p>
+    </div>
+
+    <script src="openingUp.js"></script>
+  </body>
+</html>

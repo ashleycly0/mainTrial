@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>METS Game - Smart Cup Designer</title>
+    <style>
+        :root { --primary: #F59E0B; --bg: #050a08; }
+        body { 
+            margin: 0; padding: 0; background: var(--bg); color: #fff;
+            font-family: 'Courier New', monospace; overflow: auto;
+            display: flex; align-items: center; justify-content: center; min-height: 100vh;
+        }
+
+        .container {
+            text-align: center; max-width: 700px; padding: 40px;
+            background: rgba(255, 255, 255, 0.02);
+            border: 1px solid rgba(245, 158, 11, 0.2);
+            border-radius: 30px; backdrop-filter: blur(10px);
+            box-shadow: 0 0 50px rgba(0,0,0,0.5);
+            margin: 20px;
+        }
+
+        h1 { color: var(--primary); font-size: 2.8rem; letter-spacing: 5px; margin-bottom: 5px; }
+        .subtitle { color: rgba(255,255,255,0.6); margin-bottom: 30px; font-size: 0.9rem; }
+
+        .definition-grid {
+            display: grid; grid-template-columns: 1fr 1fr; gap: 15px;
+            margin-bottom: 40px; text-align: left;
+        }
+        .def-item {
+            padding: 15px; background: rgba(245, 158, 11, 0.05);
+            border-left: 3px solid var(--primary); border-radius: 4px;
+        }
+        .def-item b { color: var(--primary); font-size: 1.1rem; }
+        .def-item span { display: block; font-size: 0.8rem; opacity: 0.7; margin-top: 5px; }
+
+        .input-group { position: relative; margin-bottom: 30px; }
+        label { display: block; color: var(--primary); margin-bottom: 10px; font-size: 1rem; }
+        input {
+            width: 80%; padding: 15px 20px; font-size: 1.2rem;
+            background: rgba(0,0,0,0.5); border: 2px solid rgba(245, 158, 11, 0.3);
+            border-radius: 12px; color: #fff; text-align: center;
+            outline: none; transition: 0.3s;
+        }
+        input:focus { border-color: var(--primary); box-shadow: 0 0 20px rgba(245, 158, 11, 0.2); }
+        
+        /* 讓 Placeholder 更有設計感：淡淡的橙色 */
+        input::placeholder { color: rgba(245, 158, 11, 0.25); font-style: italic; }
+
+        .start-btn {
+            background: #92400E; color: #fff; padding: 18px 50px;
+            font-size: 1.2rem; font-weight: bold; border: none;
+            border-radius: 15px; cursor: pointer; transition: 0.3s;
+            text-transform: uppercase; letter-spacing: 2px;
+        }
+        .start-btn:hover { background: var(--primary); transform: translateY(-2px); }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <h1>METS GAME</h1>
+        <p class="subtitle">Extenics Innovation: Smart Cup Design Studio</p>
+
+        <div class="definition-grid">
+            <div class="def-item">
+                <b>M - Matter</b>
+                <span>Object: Smart Cup (物件)</span>
+            </div>
+            <div class="def-item">
+                <b>E - Element</b>
+                <span>Basic Unit of Modeling (基元)</span>
+            </div>
+            <div class="def-item">
+                <b>T - Trait</b>
+                <span>Characteristics of Cup (特徵)</span>
+            </div>
+            <div class="def-item">
+                <b>S - State</b>
+                <span>Values/Conditions (量值/狀態)</span>
+            </div>
+        </div>
+
+        <div class="input-group">
+            <label for="target-obj">Name your Smart Cup:</label>
+            <input type="text" id="target-obj" placeholder="e.g. MySmartMug V1">
+        </div>
+
+        <button class="start-btn" onclick="initGame()">Start Modeling ➔</button>
+    </div>
+
+    <script>
+        function initGame() {
+            const inputVal = document.getElementById('target-obj').value.trim();
+            // 如果用戶真的什麼都沒填，後端存檔依然用預設，保證流程不中斷
+            const objName = inputVal || "MySmartMug V1";
+            
+            const initialData = {
+                object: objName,
+                matter: [],
+                affair: [],
+                relation: []
+            };
+            localStorage.setItem('temp_model', JSON.stringify(initialData));
+            window.location.href = 'matter.html';
+        }
+    </script>
+</body>
+</html>

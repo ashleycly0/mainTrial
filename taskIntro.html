@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METS Game - Smart Cup Task Intro</title>
+    <link rel="stylesheet" href="style.css" />
+
+    <style>
+      body {
+        margin: 0;
+        background: linear-gradient(135deg, #14241f 0%, #1b332c 100%);
+        color: #fffbeb;
+        font-family:
+          "IBM Plex Sans",
+          system-ui,
+          -apple-system,
+          BlinkMacSystemFont,
+          "Segoe UI",
+          sans-serif;
+        overflow: hidden;
+      }
+
+      .task-intro-page {
+        height: 100vh;
+        padding: 3.2% 5% 8% 5%;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .task-shell {
+        max-width: 1520px;
+        margin: 0 auto;
+        width: 100%;
+        display: grid;
+        grid-template-columns: 1.08fr 1fr;
+        gap: 26px;
+        align-items: stretch;
+      }
+
+      .intro-card,
+      .brief-card {
+        border: 1px solid rgba(255, 251, 235, 0.14);
+        border-radius: 28px;
+        background: rgba(0, 0, 0, 0.16);
+        box-shadow: 0 18px 40px rgba(0, 0, 0, 0.22);
+        backdrop-filter: blur(4px);
+      }
+
+      .intro-card {
+        padding: 34px 36px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+
+      .eyebrow {
+        display: inline-block;
+        width: fit-content;
+        padding: 8px 14px;
+        border-radius: 999px;
+        background: rgba(245, 158, 11, 0.12);
+        border: 1px solid rgba(245, 158, 11, 0.28);
+        color: #f59e0b;
+        font-family:
+          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+          monospace;
+        font-size: 14px;
+        margin-bottom: 18px;
+      }
+
+      h1 {
+        margin: 0 0 14px 0;
+        font-size: clamp(34px, 4vw, 62px);
+        line-height: 1.05;
+        font-weight: 700;
+      }
+
+      .highlight {
+        color: #f59e0b;
+        text-shadow: 0 0 20px rgba(245, 158, 11, 0.18);
+      }
+
+      .lead {
+        margin: 0 0 20px 0;
+        font-size: clamp(17px, 1.2vw, 21px);
+        line-height: 1.7;
+        opacity: 0.92;
+        max-width: 95%;
+      }
+
+      .overview-box {
+        border: 1px solid rgba(255, 251, 235, 0.12);
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 18px;
+        margin-top: 8px;
+      }
+
+      .overview-box h3 {
+        margin: 0 0 10px 0;
+        font-size: 17px;
+        color: #f59e0b;
+      }
+
+      .overview-box p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.7;
+        opacity: 0.9;
+      }
+
+      .token-box {
+        margin-top: 14px;
+        border-radius: 20px;
+        padding: 18px;
+        background: linear-gradient(
+          135deg,
+          rgba(146, 64, 14, 0.28),
+          rgba(245, 158, 11, 0.12)
+        );
+        border: 1px solid rgba(245, 158, 11, 0.22);
+      }
+
+      .token-title-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 12px;
+        margin-bottom: 10px;
+      }
+
+      .token-title {
+        margin: 0;
+        font-size: 18px;
+        color: #fffbeb;
+      }
+
+      .token-badge {
+        padding: 6px 12px;
+        border-radius: 999px;
+        border: 1px solid rgba(245, 158, 11, 0.38);
+        background: rgba(245, 158, 11, 0.12);
+        color: #f59e0b;
+        font-family:
+          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+          monospace;
+        font-size: 12px;
+        white-space: nowrap;
+      }
+
+      .token-box p {
+        margin: 0 0 12px 0;
+        font-size: 14px;
+        line-height: 1.65;
+        opacity: 0.95;
+      }
+
+      .token-grid {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(220px, 1fr));
+        gap: 12px;
+      }
+
+      .token-mini {
+        border: 1px solid rgba(255, 251, 235, 0.12);
+        border-radius: 16px;
+        background: rgba(255, 255, 255, 0.04);
+        padding: 14px;
+      }
+
+      .token-mini h4 {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        color: #f59e0b;
+      }
+
+      .token-mini p {
+        margin: 0;
+        font-size: 13px;
+        line-height: 1.55;
+        opacity: 0.92;
+      }
+
+      .brief-card {
+        padding: 24px 24px;
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        overflow: auto;
+      }
+
+      .brief-title {
+        margin: 0;
+        font-size: 25px;
+        font-weight: 700;
+      }
+
+      .brief-sub {
+        margin: 4px 0 4px 0;
+        opacity: 0.8;
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .stage-card {
+        border: 1px solid rgba(255, 251, 235, 0.12);
+        border-radius: 18px;
+        background: rgba(255, 255, 255, 0.03);
+        padding: 15px;
+      }
+
+      .stage-head {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 8px;
+      }
+
+      .stage-no {
+        width: 32px;
+        height: 32px;
+        border-radius: 999px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        background: #92400e;
+        color: #fffbeb;
+        font-family:
+          "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, Consolas,
+          monospace;
+        font-size: 13px;
+        font-weight: 700;
+        flex-shrink: 0;
+      }
+
+      .stage-head h3 {
+        margin: 0;
+        font-size: 17px;
+      }
+
+      .stage-card p {
+        margin: 0 0 8px 0;
+        font-size: 14px;
+        line-height: 1.62;
+        opacity: 0.92;
+      }
+
+      .stage-card ul {
+        margin: 0;
+        padding-left: 18px;
+        font-size: 14px;
+        line-height: 1.62;
+        opacity: 0.88;
+      }
+
+      .goal-box {
+        border-radius: 18px;
+        padding: 18px;
+        background: linear-gradient(
+          135deg,
+          rgba(146, 64, 14, 0.28),
+          rgba(245, 158, 11, 0.12)
+        );
+        border: 1px solid rgba(245, 158, 11, 0.22);
+        margin-top: 4px;
+      }
+
+      .goal-box h3 {
+        margin: 0 0 8px 0;
+        font-size: 16px;
+        color: #fffbeb;
+      }
+
+      .goal-box p {
+        margin: 0;
+        font-size: 15px;
+        line-height: 1.65;
+      }
+
+      .selection-button {
+        position: fixed;
+        bottom: 5%;
+        left: 5%;
+        right: 5%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+      }
+
+      .tip-text {
+        font-size: 14px;
+        opacity: 0.8;
+      }
+
+      .screen-warning {
+        position: fixed;
+        inset: 0;
+        background-color: #14241f;
+        color: #fffbeb;
+        display: none;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        z-index: 9999;
+        padding: 2rem;
+        flex-direction: column;
+      }
+
+      @media (max-width: 1200px) {
+        .token-grid {
+          grid-template-columns: 1fr;
+        }
+      }
+
+      @media (max-width: 1024px) {
+        .task-intro-page {
+          display: none;
+        }
+
+        .screen-warning {
+          display: flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="task-intro-page">
+      <section class="task-shell">
+        <div class="intro-card">
+          <div class="eyebrow">DEMO TASK</div>
+
+          <h1>Design a <span class="highlight">Smart Cup</span></h1>
+
+          <p class="lead">
+            In this demo, you will complete the full innovation journey of
+            creating a
+            <b>Smart Cup</b>. You will begin by understanding the product, then
+            expand ideas, develop a stronger concept, and finally choose the
+            best result.
+          </p>
+
+          <div class="overview-box">
+            <h3>Task Overview</h3>
+            <p>
+              Your mission is to turn an ordinary cup into a meaningful and
+              creative
+              <b>Smart Cup concept</b>. To do this, you will go through four
+              main stages: <b>Model</b>, <b>Extension</b>,
+              <b>Transformation</b>, and <b>Selection</b>. Each stage helps you
+              improve your idea step by step until you reach a final solution.
+            </p>
+          </div>
+
+          <div class="token-box">
+            <div class="token-title-row">
+              <h3 class="token-title">Token System (Will be launched in the Next Version)</h3>
+              <span class="token-badge">QUIZ → TOKEN → HINT</span>
+            </div>
+
+            <p>
+              During the Game, you can earn tokens by answering small questions
+              about the METS method. These tokens are shared across all four
+              levels:
+              <b>Model</b>, <b>Extension</b>, <b>Transformation</b>, and
+              <b>Selection</b>.
+            </p>
+
+            <div class="token-grid">
+              <div class="token-mini">
+                <h4>How to earn tokens</h4>
+                <p>
+                  Each Extension part contains a short question. When you answer
+                  correctly, you earn a token.
+                </p>
+              </div>
+
+              <div class="token-mini">
+                <h4>How to use tokens</h4>
+                <p>
+                  Tokens are used to unlock hints. A hint can only be unlocked
+                  when you have enough tokens.
+                </p>
+              </div>
+
+              <div class="token-mini">
+                <h4>Shared across 4 parts</h4>
+                <p>
+                  If you earn a token in Divergence, you can save it and use it
+                  later in Correlative, Implication, or Opening-up.
+                </p>
+              </div>
+
+              <div class="token-mini">
+                <h4>Important rule</h4>
+                <p>
+                  If your token count is <b>0</b>, the hint button cannot be
+                  used until you earn more tokens.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <aside class="brief-card">
+          <div>
+            <h2 class="brief-title">The 4 Stages of the Task</h2>
+            <p class="brief-sub">
+              Read the stages below so you know what you will do in the full
+              Smart Cup activity.
+            </p>
+          </div>
+
+          <div class="stage-card">
+            <div class="stage-head">
+              <div class="stage-no">1</div>
+              <h3>Model</h3>
+            </div>
+            <p>
+              In the Model stage, you first understand the original object: the
+              cup. You identify its basic features, structure, functions, and
+              current use.
+            </p>
+            <ul>
+              <li><b>Matter Element:</b></li>
+              <li><b>Affair Element:</b></li>
+              <li><b>Relation Element:</b></li>
+            </ul>
+          </div>
+
+          <div class="stage-card">
+            <div class="stage-head">
+              <div class="stage-no">2</div>
+              <h3>Extension</h3>
+            </div>
+            <p>
+              In the Extension stage, you expand the idea of the cup by
+              exploring new possibilities and relationships.
+            </p>
+            <ul>
+              <li>
+                <b>Divergence:</b> generate many new ideas and possibilities
+              </li>
+              <li>
+                <b>Correlative:</b> connect related features and functions
+              </li>
+              <li><b>Implication:</b> think about cause-and-effect logic</li>
+              <li>
+                <b>Opening-up:</b> combine ideas into bigger concept directions
+              </li>
+            </ul>
+          </div>
+
+          <div class="stage-card">
+            <div class="stage-head">
+              <div class="stage-no">3</div>
+              <h3>Transformation</h3>
+            </div>
+            <p>
+              In the Transformation stage, you turn your extended ideas into a
+              clearer product concept. You reshape your ideas into something
+              more practical, understandable, and usable.
+            </p>
+            <ul>
+              <li>Refine the Smart Cup concept</li>
+              <li>Organize the main functions and design direction</li>
+              <li>Make the idea more realistic and meaningful</li>
+            </ul>
+          </div>
+
+          <div class="stage-card">
+            <div class="stage-head">
+              <div class="stage-no">4</div>
+              <h3>Selection</h3>
+            </div>
+            <p>
+              In the Selection stage, you evaluate and choose the best final
+              concept. This is where you decide which Smart Cup idea is
+              strongest.
+            </p>
+            <ul>
+              <li>Compare different ideas</li>
+              <li>Judge usefulness, creativity, and suitability</li>
+              <li>Select the best final Smart Cup solution</li>
+            </ul>
+          </div>
+
+          <div class="goal-box">
+            <h3>Your final goal</h3>
+            <p>
+              Complete all four stages and produce a
+              <b>creative, useful, and student-friendly Smart Cup</b>
+              that can be presented as your final innovation result.
+            </p>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <div class="selection-button">
+      <div class="tip-text">
+        Read the task flow and token system carefully, then press Start.
+      </div>
+      <a href="model_kenton/startpage.html">
+        <button type="button" class="btn">Start Task ➜</button>
+      </a>
+    </div>
+
+    <div class="screen-warning">
+      <h1>Screen size not supported</h1>
+      <p>
+        Please use a desktop or tablet in landscape mode (width &gt; 1024px).
+      </p>
+    </div>
+  </body>
+</html>
