@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METS Game Level 2 - Extension</title>
+    <link rel="stylesheet" href="../style.css" />
+    <style>
+      :root {
+        --base-width: 1920;
+        --base-height: 1080;
+        --ui-scale: min(calc(100vw / var(--base-width)), calc(100vh / var(--base-height)));
+      }
+
+      body {
+        color: #fffbeb;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+        overflow: hidden;
+      }
+
+      .main-container {
+        text-align: center;
+        max-width: calc(1000 * var(--ui-scale));
+        padding: calc(40 * var(--ui-scale));
+        background: rgba(255, 251, 235, 0.02);
+        border: calc(1 * var(--ui-scale)) solid rgba(245, 158, 11, 0.15);
+        border-radius: calc(40 * var(--ui-scale));
+      }
+
+      h1 {
+        font-size: calc(72 * var(--ui-scale));
+        color: #f59e0b;
+        margin: 0;
+        letter-spacing: calc(8 * var(--ui-scale));
+        text-shadow: 0 0 calc(20 * var(--ui-scale)) rgba(245, 158, 11, 0.3);
+      }
+
+      .subtitle {
+        font-size: calc(19.2 * var(--ui-scale));
+        letter-spacing: calc(2 * var(--ui-scale));
+        text-transform: uppercase;
+        margin-bottom: calc(50 * var(--ui-scale));
+        color: rgba(255, 251, 235, 0.6);
+      }
+
+      .mets-definition-grid {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        gap: calc(20 * var(--ui-scale));
+        margin-bottom: calc(60 * var(--ui-scale));
+      }
+
+      .concept-card {
+        padding: calc(25 * var(--ui-scale)) calc(15 * var(--ui-scale));
+        border: calc(1 * var(--ui-scale)) solid #92400e;
+        border-radius: calc(20 * var(--ui-scale));
+        background: rgba(146, 64, 14, 0.05);
+        transition:
+          transform 0.3s ease,
+          background 0.3s ease;
+      }
+
+      .concept-card:hover {
+        transform: translateY(-10px);
+        background: rgba(146, 64, 14, 0.15);
+      }
+
+      .letter {
+        font-size: calc(40 * var(--ui-scale));
+        font-weight: bold;
+        color: #f59e0b;
+        display: block;
+      }
+      .term {
+        font-size: calc(24 * var(--ui-scale));
+        font-weight: bold;
+        margin: calc(10 * var(--ui-scale)) 0;
+        display: block;
+      }
+      .desc {
+        font-size: calc(12 * var(--ui-scale));
+        opacity: 0.6;
+        line-height: 1.4;
+      }
+
+      .btn-container {
+        display: flex;
+        justify-content: center;
+        gap: calc(20 * var(--ui-scale));
+      }
+
+      /* Using your project's existing button style classes */
+      .btn-start {
+        background-color: #92400e;
+        color: white;
+        padding: calc(20 * var(--ui-scale)) calc(60 * var(--ui-scale));
+        font-size: calc(22.4 * var(--ui-scale));
+        border: none;
+        border-radius: calc(50 * var(--ui-scale));
+        cursor: pointer;
+        transition: 0.3s;
+        text-decoration: none;
+        font-weight: bold;
+      }
+
+      .btn-start:hover {
+        background-color: #f59e0b;
+        box-shadow: 0 0 calc(30 * var(--ui-scale)) rgba(245, 158, 11, 0.4);
+      }
+
+      /* Screen warning from your friend's code */
+      .screen-warning {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: #0a120f;
+        z-index: 9999;
+        display: none;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      @media screen and (orientation: portrait), screen and (max-aspect-ratio: 4/3) {
+        .screen-warning {
+          display: flex;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <script>
+      window.addEventListener("load", () => {
+        localStorage.removeItem("mets_extension_divergence");
+        localStorage.removeItem("mets_extension_correlative");
+        localStorage.removeItem("mets_extension_implication");
+        localStorage.removeItem("mets_extension_openingup");
+      });
+    </script>
+
+    <div class="main-container">
+      <p style="color: #f59e0b; font-weight: bold; margin-bottom: calc(10 * var(--ui-scale))">
+        WELCOME TO
+      </p>
+      <h1>LEVEL 2 - EXTENSION</h1>
+      <div class="subtitle">
+        In this stage, you will expand your original model by systematically
+        generating new ideas through:
+      </div>
+
+      <div class="mets-definition-grid">
+        <div class="concept-card">
+          <span class="letter">D</span>
+          <span class="term">Divergence</span>
+          <p class="desc">One object → Multiple characteristics/values.</p>
+        </div>
+        <div class="concept-card">
+          <span class="letter">C</span>
+          <span class="term">Correlative</span>
+          <p class="desc">
+            Connect ideas across objects, functions, or environments.
+          </p>
+        </div>
+        <div class="concept-card">
+          <span class="letter">I</span>
+          <span class="term">Implication</span>
+          <p class="desc">If A exists → B must exist.</p>
+        </div>
+        <div class="concept-card">
+          <span class="letter">O</span>
+          <span class="term">Opening-Up</span>
+          <p class="desc">Break apart → Recombine into new forms.</p>
+        </div>
+      </div>
+
+      <div class="btn-container">
+        <a href="divergence.html" class="btn-start">Start Extending ➔</a>
+      </div>
+    </div>
+
+    <div class="screen-warning">
+      <h1 style="font-size: calc(32 * var(--ui-scale))">Screen size not supported</h1>
+      <p>Please use a desktop or tablet in landscape mode (width > calc(1024 * var(--ui-scale))).</p>
+    </div>
+  </body>
+</html>

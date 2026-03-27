@@ -1,0 +1,187 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METS Game - Level 2.3: Implication</title>
+
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="implication.css" />
+  </head>
+  <body>
+    <div class="selection-button">
+      <a href="correlative.html"
+        ><button type="button" class="btn-1">Back</button></a
+      >
+      <button
+        type="button"
+        class="btn is-disabled"
+        id="nextBtn"
+        aria-disabled="true"
+      >
+        Save and Next
+      </button>
+    </div>
+
+    <main class="implication-page">
+      <header class="imp-header">
+        <div class="imp-title">
+          <h1>Level 2.3 — Implication</h1>
+          <p class="subtitle">
+            Turn your Correlative links into IF → THEN implications.
+          </p>
+        </div>
+
+        <div class="imp-progress">
+          <div class="progress-row">
+            <span id="impCountText">Implications: 0</span>
+            <span id="ruleText">Need: 3</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="imp-grid">
+        <!-- LHS -->
+        <aside class="links-card">
+          <div class="card-head">
+            <h2>Correlative Links</h2>
+            <button class="ghost-btn" id="refreshBtn" type="button">
+              Refresh
+            </button>
+          </div>
+          <p class="small-tip">
+            Click a link to select it. You must think and type both IF and THEN
+            by yourself.
+          </p>
+          <div class="links-list" id="corrLinksList"></div>
+        </aside>
+
+        <!-- Middle: Builder -->
+        <section class="builder-card">
+          <div class="card-head">
+            <h2>Implication Builder</h2>
+            <button class="ghost-btn" id="clearBuilderBtn" type="button">
+              Clear
+            </button>
+          </div>
+
+          <div class="picked-link">
+            <div class="picked-label">Selected link</div>
+            <div class="picked-box" id="pickedLinkBox">—</div>
+          </div>
+
+          <label class="field-label" for="ifInput">IF (Condition)</label>
+          <textarea
+            id="ifInput"
+            class="textarea"
+            rows="3"
+            placeholder="e.g., IF the smart cup uses ceramic material..."
+          ></textarea>
+
+          <label class="field-label" for="thenInput">THEN (Result)</label>
+          <textarea
+            id="thenInput"
+            class="textarea"
+            rows="3"
+            placeholder="e.g., THEN heat retention can be improved."
+          ></textarea>
+
+          <div class="builder-row">
+            <select id="strengthSelect" class="select">
+              <option value="strong">Strong implication</option>
+              <option value="medium" selected>Medium implication</option>
+              <option value="weak">Weak implication</option>
+            </select>
+
+            <button class="ghost-btn" id="aiImpBtn" type="button">
+              AI Suggest
+            </button>
+            <button class="mini-btn" id="addImpBtn" type="button">
+              Add Implication
+            </button>
+          </div>
+
+          <div class="rule-box">
+            <h3>Rules to pass</h3>
+            <ul>
+              <li>Create at least <b>3</b> implications.</li>
+              <li>
+                Each implication must contain both <b>IF</b> and <b>THEN</b>.
+              </li>
+              <li>No duplicate implications.</li>
+            </ul>
+          </div>
+
+          <div class="status-box" id="statusBox" aria-live="polite">
+            Select a link on the left, then type your own IF and THEN.
+          </div>
+        </section>
+
+        <!-- RHS -->
+        <aside class="output-card">
+          <div class="card-head">
+            <h2>Your Implications</h2>
+            <button class="ghost-btn" id="clearAllBtn" type="button">
+              Clear All
+            </button>
+          </div>
+
+          <p class="small-tip">Tip: Right-click an implication to delete it.</p>
+          <div class="imp-list" id="impList"></div>
+        </aside>
+      </section>
+    </main>
+
+    <!-- Intro modal -->
+    <div class="modal-backdrop" id="introModal" hidden aria-hidden="true">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="introModalTitle"
+      >
+        <div class="modal-header">
+          <div class="modal-title" id="introModalTitle">
+            Welcome to Implication Stage
+          </div>
+          <button
+            class="modal-close"
+            id="introModalClose"
+            type="button"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="modal-body">
+          In this stage, you need to turn Correlative links into implication
+          statements. What to do: 
+          1. Click one link on the left. 
+          2. Think about the relationship. 
+          3. Type your own IF statement. 
+          4. Type your own THEN result. 
+          5. Add at least 3 implications to continue. 
+          <b>Important: The system will not auto-type IF or THEN for you.<b>
+        </div>
+
+        <div class="modal-footer">
+          <button class="modal-ok" id="introModalOk" type="button">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen-warning">
+      <h1>Screen size not supported</h1>
+      <p>
+        Please use a desktop or tablet in landscape mode (width &gt; 1024px).
+      </p>
+    </div>
+
+    <script src="implication.js"></script>
+    <script src="API.js"></script>
+  </body>
+</html>

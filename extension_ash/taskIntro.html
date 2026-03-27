@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>METS Game - Smart Cup Task Intro</title>
+  <link rel="stylesheet" href="style.css" />
+
+  <style>
+    body{
+      margin:0;
+      background: linear-gradient(135deg, #14241F 0%, #1B332C 100%);
+      color:#FFFBEB;
+      font-family:'IBM Plex Sans', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+      overflow:hidden;
+    }
+
+    .task-intro-page{
+      height:100vh;
+      padding:4% 5% 8% 5%;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .task-shell{
+      max-width: 1400px;
+      margin: 0 auto;
+      width: 100%;
+      display:grid;
+      grid-template-columns: 1.2fr 0.95fr;
+      gap: 28px;
+      align-items: stretch;
+    }
+
+    .intro-card,
+    .brief-card{
+      border:1px solid rgba(255,251,235,0.14);
+      border-radius:28px;
+      background: rgba(0,0,0,0.16);
+      box-shadow: 0 18px 40px rgba(0,0,0,0.22);
+      backdrop-filter: blur(4px);
+    }
+
+    .intro-card{
+      padding: 36px 38px;
+      display:flex;
+      flex-direction:column;
+      justify-content:center;
+    }
+
+    .eyebrow{
+      display:inline-block;
+      width:fit-content;
+      padding:8px 14px;
+      border-radius:999px;
+      background: rgba(245,158,11,0.12);
+      border:1px solid rgba(245,158,11,0.28);
+      color:#F59E0B;
+      font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:14px;
+      margin-bottom:18px;
+    }
+
+    h1{
+      margin:0 0 14px 0;
+      font-size: clamp(34px, 4vw, 64px);
+      line-height:1.05;
+      font-weight:700;
+    }
+
+    .highlight{
+      color:#F59E0B;
+      text-shadow: 0 0 20px rgba(245,158,11,0.18);
+    }
+
+    .lead{
+      margin: 0 0 24px 0;
+      font-size: clamp(17px, 1.25vw, 22px);
+      line-height:1.7;
+      opacity:0.92;
+      max-width: 90%;
+    }
+
+    .task-points{
+      display:grid;
+      grid-template-columns: repeat(2, minmax(220px, 1fr));
+      gap:14px;
+      margin-top: 10px;
+    }
+
+    .point{
+      border:1px solid rgba(255,251,235,0.12);
+      border-radius:18px;
+      background: rgba(255,255,255,0.03);
+      padding:16px 16px 14px 16px;
+    }
+
+    .point-top{
+      display:flex;
+      align-items:center;
+      gap:10px;
+      margin-bottom:8px;
+    }
+
+    .point-no{
+      width:28px;
+      height:28px;
+      border-radius:999px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:#92400E;
+      color:#FFFBEB;
+      font-family:'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size:13px;
+      font-weight:700;
+    }
+
+    .point h3{
+      margin:0;
+      font-size:16px;
+    }
+
+    .point p{
+      margin:0;
+      font-size:14px;
+      line-height:1.55;
+      opacity:0.88;
+    }
+
+    .brief-card{
+      padding: 28px 26px;
+      display:flex;
+      flex-direction:column;
+      justify-content:space-between;
+      gap:18px;
+    }
+
+    .brief-title{
+      margin:0;
+      font-size:24px;
+      font-weight:700;
+    }
+
+    .brief-sub{
+      margin:6px 0 0 0;
+      opacity:0.8;
+      font-size:14px;
+      line-height:1.5;
+    }
+
+    .mini-section{
+      border:1px solid rgba(255,251,235,0.12);
+      border-radius:18px;
+      background: rgba(255,255,255,0.03);
+      padding:16px;
+    }
+
+    .mini-section h3{
+      margin:0 0 10px 0;
+      font-size:15px;
+      color:#F59E0B;
+    }
+
+    .mini-section ul{
+      margin:0;
+      padding-left:18px;
+      line-height:1.7;
+      font-size:14px;
+      opacity:0.9;
+    }
+
+    .goal-box{
+      border-radius:18px;
+      padding:18px;
+      background: linear-gradient(135deg, rgba(146,64,14,0.28), rgba(245,158,11,0.12));
+      border:1px solid rgba(245,158,11,0.22);
+    }
+
+    .goal-box h3{
+      margin:0 0 10px 0;
+      font-size:16px;
+      color:#FFFBEB;
+    }
+
+    .goal-box p{
+      margin:0;
+      font-size:15px;
+      line-height:1.65;
+    }
+
+    .selection-button{
+      position: fixed;
+      bottom: 5%;
+      left: 5%;
+      right: 5%;
+      display:flex;
+      justify-content:space-between;
+      align-items:center;
+    }
+
+    .tip-text{
+      font-size:14px;
+      opacity:0.8;
+    }
+
+    .screen-warning {
+      position: fixed;
+      inset: 0;
+      background-color: #14241F;
+      color: #FFFBEB;
+      display: none;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      z-index: 9999;
+      padding: 2rem;
+      flex-direction:column;
+    }
+
+    @media (max-width: 1024px) {
+      .task-intro-page{
+        display:none;
+      }
+
+      .screen-warning {
+        display: flex;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main class="task-intro-page">
+    <section class="task-shell">
+      <div class="intro-card">
+        <div class="eyebrow">STUDENT DEMO TASK</div>
+
+        <h1>
+          Design a <span class="highlight">Smart Cup</span>
+        </h1>
+
+        <p class="lead">
+          In this activity, you will act as an innovator. Your mission is to improve an ordinary cup
+          and turn it into a <b>Smart Cup</b> by generating new ideas, functions, and features through
+          the METS Extension process.
+        </p>
+
+        <div class="task-points">
+          <div class="point">
+            <div class="point-top">
+              <div class="point-no">1</div>
+              <h3>Think from a normal cup</h3>
+            </div>
+            <p>Start with a basic cup and imagine how it can be upgraded, redesigned, or made smarter.</p>
+          </div>
+
+          <div class="point">
+            <div class="point-top">
+              <div class="point-no">2</div>
+              <h3>Explore new possibilities</h3>
+            </div>
+            <p>Consider materials, temperature control, reminders, portability, health tracking, cleaning, and more.</p>
+          </div>
+
+          <div class="point">
+            <div class="point-top">
+              <div class="point-no">3</div>
+              <h3>Build connections</h3>
+            </div>
+            <p>Link your ideas together to discover meaningful relationships and practical smart features.</p>
+          </div>
+
+          <div class="point">
+            <div class="point-top">
+              <div class="point-no">4</div>
+              <h3>Create a final concept</h3>
+            </div>
+            <p>At the end, you will form a complete Smart Cup concept that can move to the next stage.</p>
+          </div>
+        </div>
+      </div>
+
+      <aside class="brief-card">
+        <div>
+          <h2 class="brief-title">What you will do</h2>
+          <p class="brief-sub">
+            You will go through 4 Extension levels to expand your idea step by step.
+          </p>
+        </div>
+
+        <div class="mini-section">
+          <h3>Level 2.1 — Divergence</h3>
+          <ul>
+            <li>Generate many characteristics, values, and usage scenarios</li>
+            <li>Example: insulated, self-heating, gym use, kids use</li>
+          </ul>
+        </div>
+
+        <div class="mini-section">
+          <h3>Level 2.2 — Correlative</h3>
+          <ul>
+            <li>Connect different ideas together</li>
+            <li>Example: smart lid → hydration reminder → better user habits</li>
+          </ul>
+        </div>
+
+        <div class="mini-section">
+          <h3>Level 2.3 / 2.4</h3>
+          <ul>
+            <li><b>Implication:</b> build IF → THEN logic</li>
+            <li><b>Opening-up:</b> combine ideas into one final Smart Cup concept</li>
+          </ul>
+        </div>
+
+        <div class="goal-box">
+          <h3>Your goal</h3>
+          <p>
+            Create a Smart Cup idea that is <b>useful</b>, <b>creative</b>, and <b>suitable for students’ daily life</b>.
+          </p>
+        </div>
+      </aside>
+    </section>
+  </main>
+
+  <div class="selection-button">
+    <div class="tip-text">Read the task brief, then press Start.</div>
+    <a href="divergence.html">
+      <button type="button" class="btn">Start Task ➜</button>
+    </a>
+  </div>
+
+  <div class="screen-warning">
+    <h1>Screen size not supported</h1>
+    <p>Please use a desktop or tablet in landscape mode (width &gt; 1024px).</p>
+  </div>
+</body>
+</html>

@@ -1,0 +1,180 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METS Game - Level 2.1: Divergence</title>
+
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="divergence.css" />
+  </head>
+  <body>
+    <div class="selection-1-button">
+      <button
+        type="button"
+        class="btn is-disabled"
+        id="nextBtn"
+        aria-disabled="true"
+      >
+        Save and Next
+      </button>
+    </div>
+
+    <main class="divergence-page">
+      <header class="div-header">
+        <div class="div-title">
+          <h1>Level 2.1 — Divergence</h1>
+          <p class="subtitle">Object → Characteristics → Extended branches.</p>
+        </div>
+
+        <div class="div-progress">
+          <div class="progress-row">
+            <span id="progressText">Progress: 0%</span>
+            <span id="ideaCountText">New Branches: 0</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="div-grid">
+        <section class="tree-card">
+          <div class="tree-card-head">
+            <h2>Divergence Tree</h2>
+            <div class="root-pill">
+              <span class="pill-label">Root</span>
+              <span id="rootText">Object: (not set)</span>
+            </div>
+          </div>
+
+          <div class="tree-stage" id="treeStage">
+            <svg class="tree-lines" id="treeLines" aria-hidden="true"></svg>
+
+            <div class="tree-root-row">
+              <div class="node node-root" id="nodeRoot">
+                <span class="node-dot dot-root"></span>
+                <span class="node-text" id="nodeRootText">Smart Cup</span>
+              </div>
+            </div>
+
+            <div class="char-grid" id="charGrid"></div>
+          </div>
+
+          <p class="tree-tip">
+            Tip: Click a characteristic to select it. Right-click a
+            characteristic or branch to remove it.
+          </p>
+        </section>
+
+        <aside class="control-card">
+          <h2>Build Tree</h2>
+
+          <div class="type-picker">
+            <button class="type-btn active" data-mode="characteristic">
+              + Build Characteristic
+              <br /><span class="type-sub"
+                >Add a new 2nd-layer characteristic</span
+              >
+            </button>
+            <button class="type-btn" data-mode="branch">
+              + Build Branch
+              <br /><span class="type-sub"
+                >Extend a selected characteristic</span
+              >
+            </button>
+          </div>
+
+          <div class="selected-box-wrap">
+            <label class="field-label">Selected characteristic</label>
+            <div class="selected-box" id="selectedCharBox">—</div>
+          </div>
+
+          <label class="field-label" for="branchInput">New node</label>
+          <div class="input-row">
+            <input
+              id="branchInput"
+              type="text"
+              placeholder="e.g., Material / Ceramic / Foldable Handle..."
+              maxlength="40"
+            />
+            <button class="mini-btn" id="addBtn" type="button">Add</button>
+          </div>
+
+          <div class="helper-row">
+            <button class="ghost-btn" id="hintBtn" type="button">Hint</button>
+            <button class="ghost-btn" id="clearBtn" type="button">
+              Clear Branches
+            </button>
+          </div>
+
+          <div class="rule-box">
+            <h3>Rules to pass</h3>
+            <ul>
+              <li>Imported Matter characteristics stay on the 2nd layer.</li>
+              <li>You can add new characteristics.</li>
+              <li>You can extend branches under each characteristic.</li>
+              <li>Select a characteristic before building branches.</li>
+              <li>Create at least <b>4</b> new branches to continue.</li>
+            </ul>
+          </div>
+
+          <div class="status-box" id="statusBox" aria-live="polite">
+            Imported Matter characteristics are shown in the 2nd layer.
+          </div>
+
+          <div class="reflection">
+            <h3>Reflection (Optional)</h3>
+            <textarea
+              id="reflectionInput"
+              rows="4"
+              placeholder="Which characteristic or branch surprised you most? Why?"
+            ></textarea>
+            <button class="mini-btn wide" id="saveReflectionBtn" type="button">
+              Save Reflection
+            </button>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <!-- Hint Modal -->
+    <div class="modal-backdrop" id="hintModal" hidden aria-hidden="true">
+      <div
+        class="modal-card"
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="hintModalTitle"
+      >
+        <div class="modal-header">
+          <div class="modal-title" id="hintModalTitle">Hint</div>
+          <button
+            class="modal-close"
+            id="hintModalClose"
+            type="button"
+            aria-label="Close"
+          >
+            ✕
+          </button>
+        </div>
+
+        <div class="modal-body" id="hintModalBody">
+          Try thinking from different directions.
+        </div>
+
+        <div class="modal-footer">
+          <button class="modal-ok" id="hintModalOk" type="button">OK</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="screen-warning">
+      <h1>Screen size not supported</h1>
+      <p>
+        Please use a desktop or tablet in landscape mode (width &gt; 1024px).
+      </p>
+    </div>
+
+    <script src="divergence.js"></script>
+  </body>
+</html>
