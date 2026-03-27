@@ -363,7 +363,7 @@ nextBtn.addEventListener("click", () => {
     return;
   }
   save();
-  window.location.href = "openingup.html";
+  window.location.href = "openingUp.html";
 });
 
 // Intro modal events
