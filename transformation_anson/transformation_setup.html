@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METS Game - Level 3.1: Transformation Setup</title>
+
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="transformation_setup.css" />
+  </head>
+  <body>
+    <div class="selection-button">
+      <a href="openingUp.html">
+        <button type="button" class="btn-1">Back</button>
+      </a>
+      <button type="button" class="btn" id="nextBtn">Next</button>
+    </div>
+
+    <main class="transformation-page">
+      <header class="tf-header">
+        <div class="tf-title">
+          <h1>Level 3.1 — Transformation Setup</h1>
+          <p class="subtitle">
+            Review the Opening-up concept, choose important features, and select a
+            transformation mode before generating new schemes.
+          </p>
+        </div>
+
+        <div class="tf-progress">
+          <div class="progress-row">
+            <span id="completeText">Completion: 0/3</span>
+            <span id="ruleText">Need: 3/3</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="tf-grid">
+        <aside class="source-card">
+          <div class="card-head">
+            <h2>Source Concept</h2>
+            <button class="ghost-btn" id="refreshBtn" type="button">Refresh</button>
+          </div>
+
+          <p class="small-tip">
+            This concept is imported automatically from the Opening-up stage.
+          </p>
+
+          <div class="concept-meta">
+            <div class="meta-block">
+              <div class="meta-label">Product Name</div>
+              <div class="meta-value" id="conceptName">—</div>
+            </div>
+
+            <div class="meta-block">
+              <div class="meta-label">Target User</div>
+              <div class="meta-value" id="conceptUser">—</div>
+            </div>
+
+            <div class="meta-block">
+              <div class="meta-label">Problem Statement</div>
+              <div class="meta-value" id="conceptProblem">—</div>
+            </div>
+
+            <div class="meta-block">
+              <div class="meta-label">One-sentence Pitch</div>
+              <div class="meta-value" id="conceptPitch">—</div>
+            </div>
+          </div>
+
+          <div class="rule-box">
+            <h3>Imported from previous stage</h3>
+            <ul>
+              <li>Product concept information</li>
+              <li>Opening-up feature list</li>
+              <li>Base idea for transformation</li>
+            </ul>
+          </div>
+        </aside>
+
+        <section class="builder-card">
+          <div class="card-head">
+            <h2>Feature Configuration</h2>
+            <div class="head-actions">
+              <button class="ghost-btn" id="clearBtn" type="button">Clear Selection</button>
+            </div>
+          </div>
+
+          <p class="small-tip">
+            Select the features you want to transform, then mark them as core or optional.
+          </p>
+
+          <label class="field-label" for="modeSelect">Transformation mode</label>
+          <select id="modeSelect" class="select">
+            <option value="practical">Practical</option>
+            <option value="balanced" selected>Balanced</option>
+            <option value="creative">Creative</option>
+          </select>
+
+          <div class="mode-note" id="modeNote">
+            Balanced mode mixes practicality and novelty for stable scheme generation.
+          </div>
+
+          <label class="field-label">Available features</label>
+          <div id="featureList" class="feature-list"></div>
+
+          <div class="builder-row">
+            <button class="mini-btn" id="saveSetupBtn" type="button">Save Setup</button>
+            <div class="save-hint" id="saveHint">Not saved yet</div>
+          </div>
+
+          <div class="rule-box">
+            <h3>Rules to continue</h3>
+            <ul>
+              <li>Select at least <b>one feature</b></li>
+              <li>Assign each selected feature as <b>Core</b> or <b>Optional</b></li>
+              <li>Choose one <b>Transformation mode</b></li>
+              <li>Click <b>Next</b> to continue to scheme generation</li>
+            </ul>
+          </div>
+
+          <div class="status-box" id="statusBox" aria-live="polite">
+            Select features and a mode to prepare the Transformation stage.
+          </div>
+        </section>
+
+        <aside class="preview-card">
+          <div class="card-head">
+            <h2>Preview</h2>
+            <button class="ghost-btn" id="copyBtn" type="button">Copy</button>
+          </div>
+
+          <p class="small-tip">
+            This panel summarizes the features and mode currently selected.
+          </p>
+
+          <pre class="preview" id="previewBox">Preview will appear here.</pre>
+        </aside>
+      </section>
+    </main>
+
+    <div class="screen-warning">
+      <h1>Screen size not supported</h1>
+      <p>Please use a desktop or tablet in landscape mode (width &gt; 1024px).</p>
+    </div>
+
+    <script src="transformation_setup.js"></script>
+  </body>
+</html>

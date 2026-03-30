@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METS Game - Level 3.2: Transformation Generate</title>
+
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="transformation_generate.css" />
+  </head>
+  <body>
+    <div class="selection-button">
+      <a href="transformation_setup.html">
+        <button type="button" class="btn-1">Back</button>
+      </a>
+      <button type="button" class="btn" id="nextBtn">Next</button>
+    </div>
+
+    <main class="generate-page">
+      <header class="gen-header">
+        <div class="gen-title">
+          <h1>Level 3.2 — Transformation Generate</h1>
+          <p class="subtitle">
+            Generate candidate product schemes from the selected setup.
+          </p>
+        </div>
+
+        <div class="gen-progress">
+          <div class="progress-row">
+            <span id="generateStatusText">Schemes: 0</span>
+            <span id="selectionStatusText">Selected: No</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="gen-grid">
+        <!-- Left -->
+        <aside class="input-card">
+          <div class="card-head">
+            <h2>Input Summary</h2>
+            <button class="ghost-btn" id="refreshBtn" type="button">Refresh</button>
+          </div>
+
+          <div class="summary-block">
+            <div class="meta-label">Source Concept</div>
+            <div class="meta-value" id="conceptName">—</div>
+          </div>
+
+          <div class="summary-block">
+            <div class="meta-label">Transformation Mode</div>
+            <div class="meta-value" id="modeText">—</div>
+          </div>
+
+          <div class="summary-block">
+            <div class="meta-label">Feature Count</div>
+            <div class="meta-value" id="featureCountText">0</div>
+          </div>
+
+          <div class="summary-block">
+            <div class="meta-label">Feature Preview</div>
+            <div class="feature-pill-list" id="selectedFeaturesBox">
+              <span class="empty-text">No features loaded.</span>
+            </div>
+          </div>
+
+          <div class="status-box" id="statusBox" aria-live="polite">
+            Ready to generate transformation schemes.
+          </div>
+        </aside>
+
+        <!-- Middle -->
+        <section class="results-card">
+          <div class="card-head">
+            <h2>Generated Schemes</h2>
+            <div class="head-actions">
+              <button class="mini-btn" id="generateBtn" type="button">Generate Schemes</button>
+            </div>
+          </div>
+
+          <div id="schemeList" class="scheme-list">
+            <div class="empty-state">
+              Click <b>Generate Schemes</b> to create candidate ideas.
+            </div>
+          </div>
+        </section>
+
+        <!-- Right -->
+        <aside class="selection-card">
+          <div class="card-head">
+            <h2>Selected Scheme</h2>
+            <button class="ghost-btn" id="clearSelectionBtn" type="button">Clear</button>
+          </div>
+
+          <div id="selectedSchemeBox" class="selected-scheme-box">
+            <div class="empty-state">No scheme selected yet.</div>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <div class="screen-warning">
+      <h1>Screen size not supported</h1>
+      <p>
+        Please use a desktop or tablet in landscape mode (width &gt; 1024px).
+      </p>
+    </div>
+
+    <script src="transformation_rules.js"></script>
+    <script src="transformation_generate.js"></script>
+  </body>
+</html>

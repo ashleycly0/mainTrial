@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>METS Game - Level 3.3: Transformation Trace</title>
+
+    <link rel="stylesheet" href="../style.css" />
+    <link rel="stylesheet" href="transformation_trace.css" />
+  </head>
+  <body>
+    <div class="selection-button">
+      <a href="transformation_generate.html">
+        <button type="button" class="btn-1">Back</button>
+      </a>
+      <button type="button" class="btn" id="finishBtn">Finish</button>
+    </div>
+
+    <main class="trace-page">
+      <header class="trace-header">
+        <div class="trace-title">
+          <h1>Level 3.3 — Transformation Trace</h1>
+          <p class="subtitle">
+            Review the selected transformed scheme, inspect the rule-based trace,
+            and summarize the final output of the Transformation stage.
+          </p>
+        </div>
+
+        <div class="trace-progress">
+          <div class="progress-row">
+            <span id="traceStatusText">Trace: Ready</span>
+            <span id="selectionStatusText">Scheme: Not loaded</span>
+          </div>
+          <div class="progress-bar">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+        </div>
+      </header>
+
+      <section class="trace-grid">
+        <aside class="source-card">
+          <div class="card-head">
+            <h2>Source Concept</h2>
+            <button class="ghost-btn" id="refreshBtn" type="button">Refresh</button>
+          </div>
+
+          <p class="small-tip">
+            This panel shows the concept imported from the Opening-up stage and the
+            setup selected before generation.
+          </p>
+
+          <div class="summary-block">
+            <div class="meta-label">Product Name</div>
+            <div class="meta-value" id="conceptName">—</div>
+          </div>
+
+          <div class="summary-block">
+            <div class="meta-label">Transformation Mode</div>
+            <div class="meta-value" id="modeText">—</div>
+          </div>
+
+          <div class="summary-block">
+            <div class="meta-label">Selected Features</div>
+            <div class="feature-pill-list" id="selectedFeaturesBox">
+              <span class="empty-text">No features loaded.</span>
+            </div>
+          </div>
+
+          <div class="summary-block">
+            <div class="meta-label">Pitch</div>
+            <div class="meta-value" id="pitchText">—</div>
+          </div>
+
+          <div class="rule-box">
+            <h3>Trace purpose</h3>
+            <ul>
+              <li>Show how the scheme was generated</li>
+              <li>Explain which rule was applied</li>
+              <li>Support report writing and demo explanation</li>
+            </ul>
+          </div>
+        </aside>
+
+        <section class="trace-card">
+          <div class="card-head">
+            <h2>Transformation Trace</h2>
+            <button class="ghost-btn" id="copyTraceBtn" type="button">Copy Trace</button>
+          </div>
+
+          <p class="small-tip">
+            The trace below explains the rule-based process from the base concept to the transformed idea.
+          </p>
+
+          <div id="traceList" class="trace-list">
+            <div class="empty-state">No trace loaded yet.</div>
+          </div>
+
+          <div class="mapping-card">
+            <h3>Transformation Mapping</h3>
+            <div class="mapping-grid">
+              <div class="mapping-col">
+                <div class="mapping-label">Original</div>
+                <div class="mapping-box" id="mappingOriginal">—</div>
+              </div>
+              <div class="mapping-col">
+                <div class="mapping-label">Extended</div>
+                <div class="mapping-box" id="mappingExtended">—</div>
+              </div>
+              <div class="mapping-col">
+                <div class="mapping-label">Transformed</div>
+                <div class="mapping-box" id="mappingTransformed">—</div>
+              </div>
+            </div>
+          </div>
+
+          <div class="status-box" id="statusBox" aria-live="polite">
+            Trace page ready.
+          </div>
+        </section>
+
+        <aside class="summary-card">
+          <div class="card-head">
+            <h2>Final Scheme Summary</h2>
+            <button class="ghost-btn" id="copySummaryBtn" type="button">Copy Summary</button>
+          </div>
+
+          <p class="small-tip">
+            This panel summarizes the selected idea that will be passed to the next stage.
+          </p>
+
+          <div id="selectedSchemeBox" class="selected-scheme-box">
+            <div class="empty-state">No selected scheme found.</div>
+          </div>
+
+          <div class="rule-box">
+            <h3>Next stage</h3>
+            <ul>
+              <li>Use this selected scheme as the output of Transformation</li>
+              <li>Prepare for Selection / evaluation stage</li>
+              <li>Reuse this summary for report and presentation</li>
+            </ul>
+          </div>
+        </aside>
+      </section>
+    </main>
+
+    <div class="screen-warning">
+      <h1>Screen size not supported</h1>
+      <p>Please use a desktop or tablet in landscape mode (width &gt; 1024px).</p>
+    </div>
+
+    <script src="transformation_rules.js"></script>
+    <script src="transformation_trace.js"></script>
+  </body>
+</html>
